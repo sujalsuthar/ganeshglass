@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Lead Capture System - Ganesh Glass Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section, .leads-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .form-section h2, .leads-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #25d366;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+            background-color: #f0fdf4;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .service-option {
+            position: relative;
+        }
+
+        .service-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .service-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+        }
+
+        .service-option input[type="radio"]:checked + label {
+            background-color: #25d366;
+            color: white;
+            border-color: #25d366;
+        }
+
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #1ba952 100%);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:active {
+            transform: translateY(0);
+        }
+
+        .btn-clear {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-clear:hover {
+            background-color: #e0e0e0;
+        }
+
+        .leads-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-box .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .leads-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .lead-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #25d366;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .lead-info {
+            flex: 1;
+        }
+
+        .lead-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .lead-details {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .lead-time {
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .lead-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lead-btn {
+            padding: 6px 10px;
+            font-size: 0.8em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lead-delete {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .lead-delete:hover {
+            background-color: #cc0000;
+        }
+
+        .export-section {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-export {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-clear-all {
+            flex: 1;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-clear-all:hover {
+            background-color: #e0e0e0;
+        }
+
+        .message-preview {
+            background: #f0fdf4;
+            border-left: 4px solid #25d366;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .message-preview-label {
+            font-weight: 600;
+            color: #25d366;
+            margin-bottom: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .success-message {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .whatsapp-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        .admin-badge {
+            background: #ff9800;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 WhatsApp Lead Capture</h1>
+            <p>Ganesh Glass Center - Automated Lead Management System</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Lead Capture Form -->
+            <div class="form-section">
+                <h2>📝 Get Instant Quote</h2>
+                
+                <div class="success-message" id="successMessage">
+                    ✅ Lead saved and WhatsApp opened!
+                </div>
+
+                <form id="leadForm">
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="customerName">Your Name *</label>
+                        <input 
+                            type="text" 
+                            id="customerName" 
+                            name="customerName" 
+                            placeholder="Enter your full name"
+                            required>
+                    </div>
+
+                    <!-- Area/Location -->
+                    <div class="form-group">
+                        <label for="area">Area / Location *</label>
+                        <select id="area" name="area" required>
+                            <option value="">Select your area...</option>
+                            <option value="Chandkheda">Chandkheda</option>
+                            <option value="Motera">Motera</option>
+                            <option value="Sabarmati">Sabarmati</option>
+                            <option value="Gota">Gota</option>
+                            <option value="New CG Road">New CG Road</option>
+                            <option value="Bodakdev">Bodakdev</option>
+                            <option value="Thaltej">Thaltej</option>
+                            <option value="Maninagar">Maninagar</option>
+                            <option value="Paldi">Paldi</option>
+                            <option value="Vastrapur">Vastrapur</option>
+                            <option value="Satellite">Satellite</option>
+                            <option value="Other">Other Area</option>
+                        </select>
+                    </div>
+
+                    <!-- Service Type -->
+                    <div class="form-group">
+                        <label>Service Type *</label>
+                        <div class="services-grid">
+                            <div class="service-option">
+                                <input type="radio" id="service1" name="serviceType" value="Glass Windows" required>
+                                <label for="service1">Glass Windows</label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" id="service2" name="serviceType" value="Sliding Doors">
+                                <label for="service2">Sliding Doors</label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" id="service3" name="serviceType" value="Glass Partition">
+                                <label for="service3">Glass Partition</label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" id="service4" name="serviceType" value="Shower Cabin">
+                                <label for="service4">Shower Cabin</label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" id="service5" name="serviceType" value="Mirror Fitting">
+                                <label for="service5">Mirror Fitting</label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" id="service6" name="serviceType" value="Shop Front">
+                                <label for="service6">Shop Front</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message Preview -->
+                    <div class="message-preview">
+                        <div class="message-preview-label">📨 WhatsApp Message Preview:</div>
+                        <div id="messagePreview">Your message will appear here...</div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-whatsapp">
+                            <svg class="whatsapp-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378c-1.536.92-2.831 2.292-3.612 3.933 1.261-1.878 3.279-3.359 5.663-3.916 1.631-.389 3.315-.235 4.73.437-.644-.572-1.478-.938-2.346-.932"/>
+                            </svg>
+                            Send via WhatsApp
+                        </button>
+                        <button type="reset" class="btn btn-clear">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Leads Dashboard -->
+            <div class="leads-section">
+                <h2>📊 Recent Leads <span class="admin-badge">ADMIN VIEW</span></h2>
+
+                <div class="leads-stats">
+                    <div class="stat-box">
+                        <div class="number" id="totalLeads">0</div>
+                        <div class="label">Total Leads</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number" id="todayLeads">0</div>
+                        <div class="label">Today</div>
+                    </div>
+                </div>
+
+                <div class="leads-list" id="leadsList">
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <p>No leads yet. Start capturing leads to see them here.</p>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <button class="btn btn-export" onclick="exportLeadsCSV()">
+                        📥 Export as CSV
+                    </button>
+                    <button class="btn btn-clear-all" onclick="clearAllLeads()">
+                        🗑️ Clear All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            BUSINESS_NAME: 'Ganesh Glass Center',
+            WHATSAPP_NUMBER: '919876543210', // Replace with your WhatsApp business number
+            STORAGE_KEY: 'ganesh_glass_leads',
+            MAX_LEADS: 1000
+        };
+
+        // Lead Storage Class
+        class LeadManager {
+            constructor() {
+                this.leads = this.loadLeads();
+            }
+
+            loadLeads() {
+                try {
+                    const stored = localStorage.getItem(CONFIG.STORAGE_KEY);
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Error loading leads:', error);
+                    return [];
+                }
+            }
+
+            saveLead(leadData) {
+                const lead = {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    ...leadData
+                };
+
+                this.leads.unshift(lead);
+
+                // Keep only last N leads
+                if (this.leads.length > CONFIG.MAX_LEADS) {
+                    this.leads = this.leads.slice(0, CONFIG.MAX_LEADS);
+                }
+
+                this.persistLeads();
+                return lead;
+            }
+
+            deleteLead(leadId) {
+                this.leads = this.leads.filter(lead => lead.id !== leadId);
+                this.persistLeads();
+            }
+
+            clearAll() {
+                if (confirm('Are you sure you want to delete ALL leads? This cannot be undone.')) {
+                    this.leads = [];
+                    this.persistLeads();
+                    updateLeadsDisplay();
+                }
+            }
+
+            persistLeads() {
+                try {
+                    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.leads));
+                } catch (error) {
+                    console.error('Error saving leads:', error);
+                    alert('Warning: Unable to save leads. Storage may be full.');
+                }
+            }
+
+            getLeads() {
+                return this.leads;
+            }
+
+            getLeadsToday() {
+                const today = new Date().toDateString();
+                return this.leads.filter(lead => {
+                    const leadDate = new Date(lead.timestamp).toDateString();
+                    return leadDate === today;
+                });
+            }
+        }
+
+        // Initialize Lead Manager
+        const leadManager = new LeadManager();
+
+        // Generate WhatsApp Message
+        function generateWhatsAppMessage(formData) {
+            const message = `Hi Ganesh Glass Center,
+
+I'm interested in your services. Here are my details:
+
+👤 Name: ${formData.customerName}
+📍 Location: ${formData.area}
+🔧 Service: ${formData.serviceType}
+
+Please provide me with a quote and let me know your availability.
+
+Thank you!`;
+
+            return encodeURIComponent(message);
+        }
+
+        // Update Message Preview
+        document.getElementById('leadForm').addEventListener('change', function() {
+            const formData = new FormData(this);
+            const name = formData.get('customerName') || 'Your Name';
+            const area = formData.get('area') || 'Your Area';
+            const service = formData.get('serviceType') || 'Service Type';
+
+            const preview = `Hi Ganesh Glass Center,\n\nI'm interested in your services. Here are my details:\n\n👤 Name: ${name}\n📍 Location: ${area}\n🔧 Service: ${service}\n\nPlease provide me with a quote and let me know your availability.\n\nThank you!`;
+
+            document.getElementById('messagePreview').textContent = preview;
+        });
+
+        // Form Submit Handler
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const leadData = {
+                customerName: formData.get('customerName'),
+                area: formData.get('area'),
+                serviceType: formData.get('serviceType')
+            };
+
+            // Validate
+            if (!leadData.customerName || !leadData.area || !leadData.serviceType) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Save lead
+            const savedLead = leadManager.saveLead(leadData);
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            setTimeout(() => successMsg.classList.remove('show'), 3000);
+
+            // Generate WhatsApp message
+            const message = generateWhatsAppMessage(leadData);
+
+            // Open WhatsApp
+            const whatsappUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+
+            // Update display
+            updateLeadsDisplay();
+
+            // Reset form
+            this.reset();
+            document.getElementById('messagePreview').textContent = 'Your message will appear here...';
+
+            // Log for analytics
+            console.log('Lead saved:', savedLead);
+        });
+
+        // Update Leads Display
+        function updateLeadsDisplay() {
+            const leads = leadManager.getLeads();
+            const todayLeads = leadManager.getLeadsToday();
+
+            // Update stats
+            document.getElementById('totalLeads').textContent = leads.length;
+            document.getElementById('todayLeads').textContent = todayLeads.length;
+
+            // Update list
+            const leadsList = document.getElementById('leadsList');
+
+            if (leads.length === 0) {
+                leadsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <p>No leads yet. Start capturing leads to see them here.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            leadsList.innerHTML = leads.slice(0, 50).map(lead => {
+                const date = new Date(lead.timestamp);
+                const timeStr = date.toLocaleTimeString('en-IN', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                const dateStr = date.toLocaleDateString('en-IN');
+
+                return `
+                    <div class="lead-item">
+                        <div class="lead-info">
+                            <div class="lead-name">${lead.customerName}</div>
+                            <div class="lead-details">
+                                📍 ${lead.area} • 🔧 ${lead.serviceType}
+                            </div>
+                            <div class="lead-time">
+                                ${dateStr} at ${timeStr}
+                            </div>
+                        </div>
+                        <div class="lead-actions">
+                            <button class="lead-btn lead-delete" onclick="deleteLead(${lead.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Delete Single Lead
+        function deleteLead(leadId) {
+            if (confirm('Delete this lead?')) {
+                leadManager.deleteLead(leadId);
+                updateLeadsDisplay();
+            }
+        }
+
+        // Clear All Leads
+        function clearAllLeads() {
+            leadManager.clearAll();
+        }
+
+        // Export to CSV
+        function exportLeadsCSV() {
+            const leads = leadManager.getLeads();
+
+            if (leads.length === 0) {
+                alert('No leads to export');
+                return;
+            }
+
+            // Prepare CSV
+            let csv = 'Name,Area,Service,Date,Time\n';
+            
+            leads.forEach(lead => {
+                const date = new Date(lead.timestamp);
+                const dateStr = date.toLocaleDateString('en-IN');
+                const timeStr = date.toLocaleTimeString('en-IN', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                const row = [
+                    `"${lead.customerName}"`,
+                    `"${lead.area}"`,
+                    `"${lead.serviceType}"`,
+                    dateStr,
+                    timeStr
+                ].join(',');
+
+                csv += row + '\n';
+            });
+
+            // Create blob and download
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            const timestamp = new Date().toISOString().slice(0, 10);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `ganesh-glass-leads-${timestamp}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Show success
+            alert(`✅ Exported ${leads.length} leads as CSV`);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLeadsDisplay();
+            console.log('WhatsApp Lead Capture System Initialized');
+            console.log(`Total leads stored: ${leadManager.getLeads().length}`);
+        });
+
+        // Optional: Auto-sync leads across tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === CONFIG.STORAGE_KEY) {
+                leadManager.leads = leadManager.loadLeads();
+                updateLeadsDisplay();
+            }
+        });
+    </script>
+</body>
+</html>

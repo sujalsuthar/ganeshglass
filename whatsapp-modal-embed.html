@@ -1,0 +1,450 @@
+<!-- WhatsApp Lead Capture Modal - Add to any page -->
+<!-- Include this in your page to get the lead capture modal -->
+
+<style>
+    /* WhatsApp Lead Modal Styles */
+    .whatsapp-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9998;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .whatsapp-modal-overlay.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .whatsapp-modal {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.3s ease;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .whatsapp-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .whatsapp-modal-header h3 {
+        margin: 0;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .whatsapp-modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: #999;
+        transition: all 0.2s;
+    }
+
+    .whatsapp-modal-close:hover {
+        color: #333;
+        transform: rotate(90deg);
+    }
+
+    .whatsapp-form-group {
+        margin-bottom: 18px;
+    }
+
+    .whatsapp-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95em;
+    }
+
+    .whatsapp-form-group input,
+    .whatsapp-form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: all 0.3s;
+        font-family: inherit;
+    }
+
+    .whatsapp-form-group input:focus,
+    .whatsapp-form-group select:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        background-color: #f0fdf4;
+    }
+
+    .whatsapp-services {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .whatsapp-service-option input[type="radio"] {
+        display: none;
+    }
+
+    .whatsapp-service-option label {
+        padding: 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin: 0;
+    }
+
+    .whatsapp-service-option input[type="radio"]:checked + label {
+        background-color: #25d366;
+        color: white;
+        border-color: #25d366;
+    }
+
+    .whatsapp-message-preview {
+        background: #f0fdf4;
+        border-left: 4px solid #25d366;
+        padding: 12px;
+        border-radius: 6px;
+        margin: 15px 0;
+        font-size: 0.85em;
+        color: #333;
+        line-height: 1.5;
+    }
+
+    .whatsapp-modal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .whatsapp-btn {
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.95em;
+    }
+
+    .whatsapp-btn-submit {
+        background: linear-gradient(135deg, #25d366 0%, #1ba952 100%);
+        color: white;
+        grid-column: 1 / -1;
+    }
+
+    .whatsapp-btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-btn-cancel {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .whatsapp-btn-cancel:hover {
+        background: #e0e0e0;
+    }
+
+    .whatsapp-success-message {
+        background: #4caf50;
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        display: none;
+    }
+
+    .whatsapp-success-message.show {
+        display: block;
+        animation: slideIn 0.3s ease;
+    }
+
+    .whatsapp-floating-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #25d366 0%, #1ba952 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.8em;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        transition: all 0.3s;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .whatsapp-floating-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp-floating-btn:active {
+        transform: scale(0.95);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 640px) {
+        .whatsapp-modal {
+            padding: 20px;
+        }
+
+        .whatsapp-services {
+            grid-template-columns: 1fr;
+        }
+
+        .whatsapp-floating-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            bottom: 10px;
+            right: 10px;
+        }
+    }
+</style>
+
+<!-- Modal HTML -->
+<div class="whatsapp-modal-overlay" id="whatsappModalOverlay">
+    <div class="whatsapp-modal">
+        <div class="whatsapp-modal-header">
+            <h3>📱 Quick Quote via WhatsApp</h3>
+            <button class="whatsapp-modal-close" onclick="closeWhatsappModal()">✕</button>
+        </div>
+
+        <div class="whatsapp-success-message" id="whatsappSuccessMsg">
+            ✅ Lead saved! WhatsApp is opening...
+        </div>
+
+        <form id="whatsappModalForm">
+            <div class="whatsapp-form-group">
+                <label for="whatsapp-name">Your Name *</label>
+                <input 
+                    type="text" 
+                    id="whatsapp-name" 
+                    placeholder="Enter your full name"
+                    required>
+            </div>
+
+            <div class="whatsapp-form-group">
+                <label for="whatsapp-area">Area / Location *</label>
+                <select id="whatsapp-area" required>
+                    <option value="">Select your area...</option>
+                    <option value="Chandkheda">Chandkheda</option>
+                    <option value="Motera">Motera</option>
+                    <option value="Sabarmati">Sabarmati</option>
+                    <option value="Gota">Gota</option>
+                    <option value="New CG Road">New CG Road</option>
+                    <option value="Bodakdev">Bodakdev</option>
+                    <option value="Thaltej">Thaltej</option>
+                    <option value="Maninagar">Maninagar</option>
+                    <option value="Paldi">Paldi</option>
+                    <option value="Vastrapur">Vastrapur</option>
+                    <option value="Satellite">Satellite</option>
+                    <option value="Other">Other Area</option>
+                </select>
+            </div>
+
+            <div class="whatsapp-form-group">
+                <label>Service Type *</label>
+                <div class="whatsapp-services">
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service1" name="service" value="Glass Windows" required>
+                        <label for="wh-service1">Glass Windows</label>
+                    </div>
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service2" name="service" value="Sliding Doors">
+                        <label for="wh-service2">Sliding Doors</label>
+                    </div>
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service3" name="service" value="Glass Partition">
+                        <label for="wh-service3">Glass Partition</label>
+                    </div>
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service4" name="service" value="Shower Cabin">
+                        <label for="wh-service4">Shower Cabin</label>
+                    </div>
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service5" name="service" value="Mirror Fitting">
+                        <label for="wh-service5">Mirror Fitting</label>
+                    </div>
+                    <div class="whatsapp-service-option">
+                        <input type="radio" id="wh-service6" name="service" value="Shop Front">
+                        <label for="wh-service6">Shop Front</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="whatsapp-message-preview" id="whatsappMessagePreview">
+                Your message preview will appear here...
+            </div>
+
+            <div class="whatsapp-modal-actions">
+                <button type="submit" class="whatsapp-btn whatsapp-btn-submit">
+                    💬 Send via WhatsApp
+                </button>
+                <button type="button" class="whatsapp-btn whatsapp-btn-cancel" onclick="closeWhatsappModal()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Floating Button -->
+<button class="whatsapp-floating-btn" onclick="openWhatsappModal()" title="Get Quick Quote on WhatsApp">
+    💬
+</button>
+
+<script>
+    // WhatsApp Configuration
+    const WHATSAPP_CONFIG = {
+        BUSINESS_NUMBER: '919876543210', // Replace with your number
+        STORAGE_KEY: 'ganesh_glass_modal_leads'
+    };
+
+    // Open Modal
+    function openWhatsappModal() {
+        document.getElementById('whatsappModalOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal
+    function closeWhatsappModal() {
+        document.getElementById('whatsappModalOverlay').classList.remove('active');
+        document.body.style.overflow = 'auto';
+        document.getElementById('whatsappModalForm').reset();
+    }
+
+    // Close on overlay click
+    document.getElementById('whatsappModalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeWhatsappModal();
+        }
+    });
+
+    // Update Message Preview
+    document.getElementById('whatsappModalForm').addEventListener('change', function() {
+        const name = document.getElementById('whatsapp-name').value || 'Your Name';
+        const area = document.getElementById('whatsapp-area').value || 'Your Area';
+        const service = document.querySelector('input[name="service"]:checked')?.value || 'Service';
+
+        const preview = `Hi Ganesh Glass Center,\n\nI'm interested in your services. Here are my details:\n\n👤 Name: ${name}\n📍 Location: ${area}\n🔧 Service: ${service}\n\nPlease provide me with a quote and let me know your availability.\n\nThank you!`;
+
+        document.getElementById('whatsappMessagePreview').textContent = preview;
+    });
+
+    // Form Submit
+    document.getElementById('whatsappModalForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('whatsapp-name').value;
+        const area = document.getElementById('whatsapp-area').value;
+        const service = document.querySelector('input[name="service"]:checked').value;
+
+        if (!name || !area || !service) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Save lead
+        saveLead({ name, area, service });
+
+        // Generate message
+        const message = `Hi Ganesh Glass Center,\n\nI'm interested in your services. Here are my details:\n\n👤 Name: ${name}\n📍 Location: ${area}\n🔧 Service: ${service}\n\nPlease provide me with a quote and let me know your availability.\n\nThank you!`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.BUSINESS_NUMBER}?text=${encodedMessage}`;
+
+        // Show success message
+        const successMsg = document.getElementById('whatsappSuccessMsg');
+        successMsg.classList.add('show');
+        setTimeout(() => successMsg.classList.remove('show'), 2000);
+
+        // Open WhatsApp
+        setTimeout(() => {
+            window.open(whatsappUrl, '_blank');
+            closeWhatsappModal();
+        }, 500);
+
+        this.reset();
+    });
+
+    // Save Lead Function
+    function saveLead(leadData) {
+        try {
+            let leads = JSON.parse(localStorage.getItem(WHATSAPP_CONFIG.STORAGE_KEY) || '[]');
+            leads.unshift({
+                timestamp: new Date().toISOString(),
+                ...leadData
+            });
+            leads = leads.slice(0, 500); // Keep last 500
+            localStorage.setItem(WHATSAPP_CONFIG.STORAGE_KEY, JSON.stringify(leads));
+        } catch (error) {
+            console.error('Error saving lead:', error);
+        }
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeWhatsappModal();
+        }
+    });
+</script>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass & Aluminium Price Estimator | Ganesh Glass Center Ahmedabad</title>
+    <meta name="description" content="Calculate instant glass prices for windows, doors, partitions & more. Quick estimates for glass services in Ahmedabad. Final price after site measurement.">
+    <meta name="keywords" content="glass price calculator, aluminium estimator, glass windows price, sliding doors cost, Ahmedabad">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #764ba2;
+            --success: #25d366;
+            --danger: #ff6b6b;
+            --warning: #ffa94d;
+            --light: #f5f5f5;
+            --dark: #2d3436;
+            --border: #e0e0e0;
+            --text: #333;
+            --text-light: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 5px;
+        }
+
+        .header .tagline {
+            font-size: 0.9em;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        /* Main Card */
+        .estimator-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-bottom: 30px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Section */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+        }
+
+        .form-section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 1em;
+        }
+
+        label .required {
+            color: var(--danger);
+        }
+
+        /* Select Inputs */
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        select:hover, input[type="number"]:hover {
+            border-color: var(--primary);
+        }
+
+        select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Radio Buttons */
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Dimensions Grid */
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .dimensions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Results Section */
+        .results-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .results-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            padding-top: 20px;
+            padding-bottom: 0;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .result-label {
+            opacity: 0.9;
+        }
+
+        .result-value {
+            font-weight: 600;
+        }
+
+        /* Buttons Grid */
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Buttons */
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--text);
+            width: 100%;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        .disclaimer strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Price Breakdown */
+        .price-breakdown {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .price-breakdown.show {
+            display: block;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            padding-top: 10px;
+            color: var(--primary);
+        }
+
+        /* Input Helper Text */
+        .helper-text {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9em;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* SEO Content Section */
+        .seo-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 40px;
+        }
+
+        .seo-content h2 {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .seo-content h3 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .seo-content p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .seo-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .seo-content li {
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-item strong {
+            color: var(--primary);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        /* Loading State */
+        .calculating {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .estimator-card {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .form-section-title {
+                font-size: 1.1em;
+            }
+
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 Glass & Aluminium Price Estimator</h1>
+            <p>Ganesh Glass Center, Ahmedabad</p>
+            <p class="tagline">Get instant estimates for your glass & aluminium projects</p>
+        </div>
+
+        <!-- Main Estimator Card -->
+        <div class="estimator-card">
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <strong>⚠️ Disclaimer</strong>
+                This is an estimated price based on standard measurements and materials. Final price will be determined after on-site measurement by our expert team. Prices may vary based on design complexity, accessibility, and current market rates.
+            </div>
+
+            <form id="estimatorForm">
+                <!-- Service Type Selection -->
+                <div class="form-section">
+                    <div class="form-section-title">Select Your Service</div>
+                    
+                    <div class="form-group">
+                        <label for="serviceType">Service Type <span class="required">*</span></label>
+                        <select id="serviceType" required onchange="updatePricingTier()">
+                            <option value="">-- Choose a service --</option>
+                            <option value="window">Glass Windows</option>
+                            <option value="sliding-door">Sliding Glass Doors</option>
+                            <option value="partition">Glass Partitions (Office)</option>
+                            <option value="shower-cabin">Shower Cabins</option>
+                            <option value="mirror">Mirror Fitting</option>
+                            <option value="shop-front">Shop Front</option>
+                            <option value="custom">Custom Glass Solution</option>
+                        </select>
+                        <p class="helper-text">Select the type of glass service you need</p>
+                    </div>
+                </div>
+
+                <!-- Glass Type Selection -->
+                <div class="form-section">
+                    <div class="form-section-title">Choose Glass Type</div>
+                    
+                    <div class="form-group">
+                        <label>Glass Type <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="glassNormal" name="glassType" value="normal" required onchange="calculatePrice()">
+                                <label for="glassNormal">Normal Glass</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="glassToughened" name="glassType" value="toughened" onchange="calculatePrice()">
+                                <label for="glassToughened">Toughened Glass</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="glassTinted" name="glassType" value="tinted" onchange="calculatePrice()">
+                                <label for="glassTinted">Tinted Glass</label>
+                            </div>
+                        </div>
+                        <p class="helper-text">Toughened: Safer & Durable | Tinted: Heat reduction & Privacy</p>
+                    </div>
+                </div>
+
+                <!-- Dimensions Input -->
+                <div class="form-section">
+                    <div class="form-section-title">Enter Dimensions</div>
+                    
+                    <div class="dimensions-grid">
+                        <div class="form-group">
+                            <label for="width">Width (Inches) <span class="required">*</span></label>
+                            <input type="number" id="width" placeholder="e.g., 36" min="12" max="240" required onchange="calculatePrice()" oninput="calculatePrice()">
+                            <p class="helper-text">Minimum 12 inches</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (Inches) <span class="required">*</span></label>
+                            <input type="number" id="height" placeholder="e.g., 48" min="12" max="240" required onchange="calculatePrice()" oninput="calculatePrice()">
+                            <p class="helper-text">Minimum 12 inches</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Options -->
+                <div class="form-section">
+                    <div class="form-section-title">Installation Options</div>
+                    
+                    <div class="form-group">
+                        <label>Include Installation? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="installYes" name="installation" value="yes" required onchange="calculatePrice()">
+                                <label for="installYes">Yes, Include Installation</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="installNo" name="installation" value="no" onchange="calculatePrice()">
+                                <label for="installNo">Glass Only (Self Install)</label>
+                            </div>
+                        </div>
+                        <p class="helper-text">Professional installation ensures quality & durability</p>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <div class="results-title">📊 Estimated Price Breakdown</div>
+                    <div class="result-item">
+                        <span class="result-label">Service</span>
+                        <span class="result-value" id="resultService">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Glass Area</span>
+                        <span class="result-value" id="resultArea">-- sq ft</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Base Price (Material)</span>
+                        <span class="result-value" id="resultBasePrice">₹--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Installation Charge</span>
+                        <span class="result-value" id="resultInstallation">₹--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Estimated Total</span>
+                        <span class="result-value" id="resultTotal">₹--</span>
+                    </div>
+                </div>
+
+                <!-- Price Breakdown Details -->
+                <div class="price-breakdown" id="priceBreakdown">
+                    <div style="font-weight: 600; margin-bottom: 15px; color: var(--primary);">Price Calculation Details:</div>
+                    <div class="breakdown-item">
+                        <span>Area (sq ft)</span>
+                        <span id="breakdownArea">--</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Price per sq ft</span>
+                        <span id="breakdownRate">--</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Material Total</span>
+                        <span id="breakdownMaterial">--</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Installation</span>
+                        <span id="breakdownInstall">--</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Total Estimate</span>
+                        <span id="breakdownTotal">--</span>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="errorMessage"></div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    ✅ Estimate calculated! This is an approximate price. Please contact us for a detailed quote after site inspection.
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-grid">
+                    <button type="reset" class="btn-secondary" onclick="resetCalculator()">Reset Calculator</button>
+                    <button type="button" class="btn-primary" onclick="contactAboutEstimate()">Get Detailed Quote</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- SEO Content Section -->
+        <div class="seo-content">
+            <h2>About Our Glass & Aluminium Price Estimator</h2>
+            
+            <p>Welcome to Ganesh Glass Center's <strong>Glass & Aluminium Price Estimator</strong> - your quick and easy tool to get instant price estimates for glass and aluminium projects in Ahmedabad. Whether you need glass windows, sliding doors, shower cabins, or custom glass solutions, our calculator provides accurate estimates based on your specific requirements.</p>
+
+            <h3>How Our Price Estimator Works</h3>
+            <p>Our advanced price calculator considers multiple factors to provide you with the most accurate estimate possible:</p>
+            <ul>
+                <li><strong>Service Type:</strong> Different glass services have different pricing structures based on complexity and materials used.</li>
+                <li><strong>Glass Type:</strong> Normal glass, tempered glass, and tinted glass have different prices per square foot.</li>
+                <li><strong>Dimensions:</strong> The exact measurements of your space directly impact the total glass area and cost.</li>
+                <li><strong>Installation:</strong> Professional installation adds labor costs but ensures quality and durability.</li>
+                <li><strong>Market Rates:</strong> Our prices are regularly updated to reflect current market rates in Ahmedabad.</li>
+            </ul>
+
+            <h3>Glass Types & Their Benefits</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <strong>Normal Glass</strong>
+                    <p>Budget-friendly option, suitable for interior partitions and non-critical areas. Standard thickness 4mm-6mm.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>Toughened Glass</strong>
+                    <p>4-5x stronger than normal glass, safer for families, meets Indian safety standards. Ideal for windows and balconies.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>Tinted Glass</strong>
+                    <p>Reduces heat by 40-50%, provides privacy, 99% UV protection. Perfect for Ahmedabad's hot climate.</p>
+                </div>
+            </div>
+
+            <h3>Services Covered by Our Estimator</h3>
+            <ul>
+                <li><strong>Glass Windows:</strong> Residential and commercial window solutions with customizable sizes and finishes.</li>
+                <li><strong>Sliding Glass Doors:</strong> Modern sliding door systems for balconies, patios, and room dividers.</li>
+                <li><strong>Glass Partitions:</strong> Office and commercial glass partitions for creating separate workspaces.</li>
+                <li><strong>Shower Cabins:</strong> Luxury bathroom enclosures with frameless or framed designs.</li>
+                <li><strong>Mirror Fitting:</strong> Custom mirrors for homes, salons, gyms, and commercial spaces.</li>
+                <li><strong>Shop Fronts:</strong> Attractive retail glass facades to showcase your business.</li>
+            </ul>
+
+            <h3>Why Use Our Price Estimator?</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <strong>✅ Instant Calculations</strong>
+                    <p>Get price estimates immediately without waiting for a manual quote.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>✅ Accurate Pricing</strong>
+                    <p>Based on real market rates and current glass costs in Ahmedabad.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>✅ Multiple Options</strong>
+                    <p>Compare prices for different glass types and installation options.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>✅ Transparent Pricing</strong>
+                    <p>See itemized breakdown: material costs + installation charges.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>✅ No Hidden Charges</strong>
+                    <p>Estimates include all relevant costs except site-specific modifications.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>✅ Mobile Friendly</strong>
+                    <p>Calculate on desktop, tablet, or mobile phone anytime, anywhere.</p>
+                </div>
+            </div>
+
+            <h3>Understanding Your Estimate</h3>
+            <p>When you use our calculator, you'll receive a detailed breakdown including:</p>
+            <ul>
+                <li><strong>Glass Area:</strong> Total square footage of glass required</li>
+                <li><strong>Base Price (Material):</strong> Cost of glass and materials at current market rates</li>
+                <li><strong>Installation Charge:</strong> Professional installation and labor costs (if selected)</li>
+                <li><strong>Total Estimate:</strong> Combined cost for your project</li>
+            </ul>
+
+            <h3>Important: Why Site Measurement Matters</h3>
+            <p>While our price estimator provides accurate initial estimates, <strong>the final price will be determined after on-site measurement by our expert team</strong>. This is important because:</p>
+            <ul>
+                <li><strong>Precise Measurements:</strong> Actual site conditions may require adjustments to the estimated dimensions.</li>
+                <li><strong>Design Complexity:</strong> Special shapes, curves, or custom designs may affect final pricing.</li>
+                <li><strong>Accessibility:</strong> Building access, floor level, and installation difficulty impact labor costs.</li>
+                <li><strong>Current Rates:</strong> Market rates may change; our team provides current market pricing during site visit.</li>
+                <li><strong>Customization:</strong> Special requests like frosting, tinting patterns, or custom colors may involve additional charges.</li>
+            </ul>
+
+            <h3>Our 24+ Years of Expertise</h3>
+            <p>Since 1999, Ganesh Glass Center has been serving Ahmedabad with premium glass and aluminium solutions. Our team of expert technicians provides professional consultation, precise site measurements, and quality installation for all your glass needs. We serve all areas of Ahmedabad including Chandkheda, Motera, Sabarmati, Bodakdev, Gota, Thaltej, Maninagar, Paldi, Vastrapur, Satellite, and many more.</p>
+
+            <h3>Next Steps After Using the Estimator</h3>
+            <p>After calculating your estimate:</p>
+            <ol>
+                <li><strong>Click "Get Detailed Quote":</strong> Our team will contact you to schedule a free site measurement.</li>
+                <li><strong>Site Inspection:</strong> Our expert will visit your location, take precise measurements, and assess any special requirements.</li>
+                <li><strong>Detailed Quotation:</strong> You'll receive a comprehensive quote with final pricing and project timeline.</li>
+                <li><strong>Project Execution:</strong> Once approved, we'll schedule installation at your convenience.</li>
+                <li><strong>Quality Assurance:</strong> Professional installation with 2-year product warranty and 5-year installation warranty.</li>
+            </ol>
+
+            <h3>Frequently Asked Questions About Pricing</h3>
+            <ul>
+                <li><strong>Q: Does the estimate include taxes?</strong><br>A: The base estimate includes material and labor. GST and applicable taxes will be added to final quote as per government regulations.</li>
+                <li><strong>Q: What if my measurements change?</strong><br>A: Our team will recalculate the price during site visit. We'll inform you of any changes before proceeding.</li>
+                <li><strong>Q: Is installation mandatory?</strong><br>A: No, you can purchase glass only. However, we recommend professional installation for quality and safety.</li>
+                <li><strong>Q: How often are prices updated?</strong><br>A: Our pricing reflects current market rates and is updated monthly to ensure accuracy.</li>
+                <li><strong>Q: Can I get bulk discounts?</strong><br>A: Yes! Large projects and bulk orders receive special discounts. Contact our sales team for custom quotes.</li>
+            </ul>
+
+            <h3>Contact Ganesh Glass Center Today</h3>
+            <p>Don't just estimate - let our expert team help you with your glass and aluminium needs! Use our price estimator to get started, then contact us for professional consultation, site measurement, and quality installation.</p>
+            <p><strong>📱 Call Now:</strong> <a href="tel:+919876543210" style="color: var(--primary); text-decoration: none;">+91 98765 43210</a></p>
+            <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/919876543210?text=I%20want%20to%20get%20a%20quote%20for%20glass%20solutions" style="color: var(--primary); text-decoration: none;">Send Message</a></p>
+            <p><strong>📍 Serving:</strong> All areas of Ahmedabad | <strong>Hours:</strong> Monday-Saturday, 9 AM - 7 PM</p>
+        </div>
+    </div>
+
+    <script>
+        // Pricing Structure (per square foot in INR)
+        const pricingData = {
+            window: {
+                normal: 250,
+                toughened: 450,
+                tinted: 500,
+                installation: 150
+            },
+            'sliding-door': {
+                normal: 350,
+                toughened: 550,
+                tinted: 650,
+                installation: 250
+            },
+            partition: {
+                normal: 300,
+                toughened: 500,
+                tinted: 600,
+                installation: 200
+            },
+            'shower-cabin': {
+                normal: 400,
+                toughened: 700,
+                tinted: 800,
+                installation: 300
+            },
+            mirror: {
+                normal: 200,
+                toughened: 350,
+                tinted: 400,
+                installation: 100
+            },
+            'shop-front': {
+                normal: 400,
+                toughened: 600,
+                tinted: 700,
+                installation: 350
+            },
+            custom: {
+                normal: 350,
+                toughened: 550,
+                tinted: 650,
+                installation: 250
+            }
+        };
+
+        // Service Display Names
+        const serviceNames = {
+            window: 'Glass Windows',
+            'sliding-door': 'Sliding Glass Doors',
+            partition: 'Glass Partitions (Office)',
+            'shower-cabin': 'Shower Cabins',
+            mirror: 'Mirror Fitting',
+            'shop-front': 'Shop Front',
+            custom: 'Custom Glass Solution'
+        };
+
+        function calculatePrice() {
+            const serviceType = document.getElementById('serviceType').value;
+            const glassType = document.querySelector('input[name="glassType"]:checked')?.value;
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const installation = document.querySelector('input[name="installation"]:checked')?.value;
+
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Validation
+            if (!serviceType || !glassType || !width || !height || !installation) {
+                errorMessage.textContent = '⚠️ Please fill in all required fields to calculate price.';
+                errorMessage.classList.add('show');
+                document.getElementById('resultsSection').classList.remove('show');
+                document.getElementById('priceBreakdown').classList.remove('show');
+                document.getElementById('successMessage').classList.remove('show');
+                return;
+            }
+
+            if (width < 12 || height < 12) {
+                errorMessage.textContent = '⚠️ Width and height must be at least 12 inches.';
+                errorMessage.classList.add('show');
+                document.getElementById('resultsSection').classList.remove('show');
+                return;
+            }
+
+            errorMessage.classList.remove('show');
+
+            // Calculate area in square feet
+            const areaInInches = width * height;
+            const areaInSqFt = areaInInches / 144; // 144 sq inches = 1 sq foot
+
+            // Get pricing
+            const pricing = pricingData[serviceType];
+            const basePricePerSqFt = pricing[glassType];
+            const materialCost = Math.round(areaInSqFt * basePricePerSqFt);
+            const installationCost = installation === 'yes' ? Math.round(areaInSqFt * pricing.installation) : 0;
+            const totalCost = materialCost + installationCost;
+
+            // Update Results Section
+            document.getElementById('resultService').textContent = serviceNames[serviceType];
+            document.getElementById('resultArea').textContent = areaInSqFt.toFixed(2) + ' sq ft';
+            document.getElementById('resultBasePrice').textContent = '₹' + materialCost.toLocaleString('en-IN');
+            document.getElementById('resultInstallation').textContent = '₹' + installationCost.toLocaleString('en-IN');
+            document.getElementById('resultTotal').textContent = '₹' + totalCost.toLocaleString('en-IN');
+
+            // Update Breakdown
+            document.getElementById('breakdownArea').textContent = areaInSqFt.toFixed(2) + ' sq ft';
+            document.getElementById('breakdownRate').textContent = '₹' + basePricePerSqFt.toLocaleString('en-IN');
+            document.getElementById('breakdownMaterial').textContent = '₹' + materialCost.toLocaleString('en-IN');
+            document.getElementById('breakdownInstall').textContent = '₹' + installationCost.toLocaleString('en-IN');
+            document.getElementById('breakdownTotal').textContent = '₹' + totalCost.toLocaleString('en-IN');
+
+            // Show Results
+            document.getElementById('resultsSection').classList.add('show');
+            document.getElementById('priceBreakdown').classList.add('show');
+            document.getElementById('successMessage').classList.add('show');
+        }
+
+        function updatePricingTier() {
+            // Reset glass type when service changes
+            document.querySelector('input[name="glassType"]').checked = false;
+            document.getElementById('resultsSection').classList.remove('show');
+            document.getElementById('priceBreakdown').classList.remove('show');
+            document.getElementById('successMessage').classList.remove('show');
+            calculatePrice();
+        }
+
+        function resetCalculator() {
+            document.getElementById('estimatorForm').reset();
+            document.getElementById('resultsSection').classList.remove('show');
+            document.getElementById('priceBreakdown').classList.remove('show');
+            document.getElementById('successMessage').classList.remove('show');
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        function contactAboutEstimate() {
+            const serviceType = document.getElementById('serviceType').value;
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            const glassType = document.querySelector('input[name="glassType"]:checked')?.value;
+            const serviceName = serviceNames[serviceType] || 'Glass Service';
+
+            if (!serviceType || !width || !height || !glassType) {
+                alert('Please complete the calculator first to get an estimate.');
+                return;
+            }
+
+            const message = `Hi Ganesh Glass Center,\n\nI'm interested in getting a detailed quote for:\n\n📏 Service: ${serviceName}\n📐 Dimensions: ${width}" x ${height}"\n💎 Glass Type: ${glassType}\n\nPlease provide me with a detailed quotation after site measurement.\n\nThank you!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/919876543210?text=${encodedMessage}`, '_blank');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('width').addEventListener('input', calculatePrice);
+            document.getElementById('height').addEventListener('input', calculatePrice);
+        });
+    </script>
+</body>
+</html>

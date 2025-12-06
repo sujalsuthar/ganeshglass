@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Ganesh Glass Center | Instant Support</title>
+    <meta name="description" content="Chat with our AI-powered assistant for glass and aluminium solutions. Instant answers to FAQs and direct WhatsApp connection for quotes and support.">
+    <meta name="keywords" content="glass chat, customer support, glass quotation, aluminium solutions, Ahmedabad glass">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #764ba2;
+            --success: #25d366;
+            --danger: #ff6b6b;
+            --light: #f5f5f5;
+            --light-2: #f9f9f9;
+            --dark: #2d3436;
+            --text: #333;
+            --text-light: #666;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            max-height: 800px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .chat-header-text h3 {
+            font-size: 1.1em;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .chat-header-text p {
+            font-size: 0.85em;
+            opacity: 0.85;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: rotate(90deg);
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--light-2);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-bubble {
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .message-time {
+            font-size: 0.75em;
+            opacity: 0.6;
+            margin-top: 4px;
+            padding: 0 12px;
+        }
+
+        /* Buttons */
+        .message-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-option {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: left;
+            max-width: 70%;
+        }
+
+        .btn-option:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .btn-option:active {
+            transform: translateX(0);
+        }
+
+        /* Service Selection */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+            max-width: 70%;
+        }
+
+        .service-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .service-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Input Area */
+        .chat-input-area {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .send-btn:active {
+            transform: translateY(0);
+        }
+
+        /* WhatsApp CTA */
+        .whatsapp-cta {
+            background: linear-gradient(135deg, var(--success) 0%, #1ba952 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            max-width: 70%;
+        }
+
+        .whatsapp-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--light);
+            border-radius: 12px;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-light);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .chat-container {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .message-bubble {
+                max-width: 85%;
+                font-size: 0.95em;
+            }
+
+            .service-grid {
+                max-width: 100%;
+            }
+
+            .btn-option {
+                max-width: 100%;
+            }
+
+            .whatsapp-cta {
+                max-width: 100%;
+            }
+
+            .close-btn {
+                display: none;
+            }
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-left: 5px;
+            font-weight: 600;
+        }
+
+        /* Empty State */
+        .empty-message {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-header-text">
+                    <h3>Ganesh Glass Bot</h3>
+                    <p>Online - Always ready to help</p>
+                </div>
+            </div>
+            <button class="close-btn" onclick="closeChat()">✕</button>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+            <input 
+                type="text" 
+                class="chat-input" 
+                id="chatInput" 
+                placeholder="Type your question..."
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="send-btn" onclick="sendMessage()">
+                ➤
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Knowledge Base - FAQ Data
+        const knowledgeBase = {
+            greetings: {
+                keywords: ['hi', 'hello', 'hey', 'start', 'help', 'menu'],
+                response: "👋 Welcome to Ganesh Glass Center! I'm here to help you with:\n\n✓ Glass & Aluminium solutions\n✓ Pricing information\n✓ Installation timelines\n✓ Emergency services\n✓ Service selection\n\nWhat would you like to know?",
+                buttons: ['Glass Services', 'Pricing', 'Timeline', 'Emergency', 'Other']
+            },
+            
+            services: {
+                keywords: ['service', 'what do you offer', 'products', 'glass services'],
+                response: "We offer comprehensive glass & aluminium solutions:",
+                details: [
+                    "🪟 Glass Windows - Custom sizes, tempered & tinted options",
+                    "🚪 Sliding Doors - Modern designs for balconies & patios",
+                    "🏢 Glass Partitions - Office solutions with soundproofing",
+                    "🚿 Shower Cabins - Luxury bathroom enclosures",
+                    "🪞 Mirror Fitting - Residential & commercial",
+                    "🏬 Shop Fronts - Attractive retail facades",
+                    "🆘 Emergency Replacement - 24/7 service available"
+                ],
+                buttons: ['Get Quote', 'Pricing', 'Emergency Service', 'Back to Menu']
+            },
+
+            pricing: {
+                keywords: ['price', 'cost', 'rates', 'how much', 'pricing', 'quote'],
+                response: "💰 Our pricing depends on several factors:\n\n📊 Per Square Foot Rates:",
+                details: [
+                    "🟢 Normal Glass: ₹250-300/sq ft",
+                    "🟡 Tempered Glass: ₹450-550/sq ft",
+                    "🔴 Tinted Glass: ₹500-650/sq ft",
+                    "⚙️ Installation: ₹150-300/sq ft",
+                    "\n💡 Bulk discounts available for large projects (10%-20% off)\n\n📝 Final price determined after professional site measurement.",
+                    "\n⚠️ Use our price estimator tool or get a free quote!"
+                ],
+                buttons: ['Price Calculator', 'Get Quote Now', 'View Services', 'Back to Menu']
+            },
+
+            timeline: {
+                keywords: ['how long', 'timeline', 'days', 'when', 'delivery', 'installation time', 'schedule'],
+                response: "⏱️ Project Timeline:\n",
+                details: [
+                    "📋 Quotation: 24-48 hours after site visit",
+                    "📦 Material Supply: 7-15 days (standard), 3-5 days (express)",
+                    "👷 Installation: Typically 1-3 days depending on project size",
+                    "✅ Final Inspection: 1 day",
+                    "🎉 Total Average Time: 2-3 weeks from order to completion",
+                    "\n⚡ Express options available for urgent projects\n✓ All timelines subject to material availability"
+                ],
+                buttons: ['Speed Options', 'Emergency Service', 'Get Quote', 'Back to Menu']
+            },
+
+            emergency: {
+                keywords: ['emergency', '24/7', 'urgent', 'broken', 'broken glass', 'immediately', 'now', 'help urgent'],
+                response: "🚨 Emergency Glass Replacement Service - 24/7 Available!\n",
+                details: [
+                    "✓ Available: Anytime, day or night, weekends & holidays",
+                    "⚡ Response Time: 1-2 hours in Ahmedabad",
+                    "🔧 We handle: Broken windows, doors, partitions, shop fronts",
+                    "📞 Call immediately: +91 98765 43210",
+                    "💬 WhatsApp: Send 'EMERGENCY' with your location",
+                    "\n💰 Emergency charges apply (nominal fee for quick service)\n🛡️ Temporary boarding available if needed"
+                ],
+                buttons: ['Call Now', 'WhatsApp Emergency', 'Back to Menu']
+            },
+
+            guarantee: {
+                keywords: ['warranty', 'guarantee', 'assured', 'protection', 'refund'],
+                response: "🛡️ Our Guarantees & Warranties:\n",
+                details: [
+                    "2️⃣ 2-Year Product Warranty - Manufacturing defects covered",
+                    "5️⃣ 5-Year Installation Warranty - Workmanship guaranteed",
+                    "💯 100% Satisfaction - We stand behind our work",
+                    "🔧 Free Repairs - For defects within warranty period",
+                    "✅ Transparent Pricing - No hidden charges",
+                    "📋 Complete Documentation - Full compliance & certification"
+                ],
+                buttons: ['View Warranty Details', 'Get Quote', 'Back to Menu']
+            },
+
+            payment: {
+                keywords: ['payment', 'how to pay', 'methods', 'installment', 'credit', 'terms'],
+                response: "💳 Payment Options & Terms:\n",
+                details: [
+                    "Standard: 50% advance, 50% on completion",
+                    "Large Projects: Flexible payment schedules available",
+                    "Credit Terms: 15-30 days (on approval) for bulk orders",
+                    "\n✓ Payment Methods:\n• Bank Transfer (NEFT)",
+                    "• Cheque",
+                    "• Credit/Debit Cards",
+                    "• Digital Wallets",
+                    "• Cash",
+                    "\n📄 All invoices GST-compliant with full documentation"
+                ],
+                buttons: ['Get Quote', 'Back to Menu']
+            },
+
+            areas: {
+                keywords: ['area', 'location', 'where', 'serve', 'do you serve', 'available'],
+                response: "📍 We Serve All Ahmedabad Areas:\n",
+                details: [
+                    "✓ Chandkheda, Motera, Sabarmati",
+                    "✓ Bodakdev, Thaltej, Gota",
+                    "✓ New CG Road, Maninagar",
+                    "✓ Paldi, Vastrapur, Satellite",
+                    "✓ All other Ahmedabad areas",
+                    "\n🚚 Fast delivery and installation scheduling across all areas",
+                    "📞 Local team ensures quick response and quality service"
+                ],
+                buttons: ['Get Quote', 'Emergency Service', 'Back to Menu']
+            },
+
+            selectService: {
+                keywords: ['select service', 'which service', 'i need', 'i want', 'looking for'],
+                response: "🔍 Please select the service you need:\n",
+                showServiceButtons: true,
+                buttons: []
+            },
+
+            back: {
+                keywords: ['back', 'menu', 'main menu', 'start over'],
+                response: "🏠 Main Menu - What can I help you with?",
+                buttons: ['Glass Services', 'Pricing', 'Timeline', 'Emergency', 'Warranty']
+            }
+        };
+
+        // Service list for quick selection
+        const services = [
+            { name: 'Glass Windows', emoji: '🪟' },
+            { name: 'Sliding Doors', emoji: '🚪' },
+            { name: 'Glass Partitions', emoji: '🏢' },
+            { name: 'Shower Cabins', emoji: '🚿' },
+            { name: 'Mirror Fitting', emoji: '🪞' },
+            { name: 'Shop Fronts', emoji: '🏬' }
+        ];
+
+        // Chat State
+        let chatHistory = [];
+        let selectedService = null;
+
+        // Initialize Chat
+        function initializeChat() {
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.innerHTML = '';
+            
+            const welcomeMessage = {
+                type: 'bot',
+                text: "👋 Welcome to Ganesh Glass Center!\n\nI'm your AI assistant. How can I help you today?",
+                buttons: ['Glass Services', 'Pricing', 'Timeline', 'Emergency Service', 'Contact Us']
+            };
+            
+            displayMessage(welcomeMessage);
+        }
+
+        // Display Message
+        function displayMessage(message) {
+            const messagesDiv = document.getElementById('chatMessages');
+            
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${message.type}`;
+            
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = 'message-bubble';
+            bubbleEl.innerHTML = message.text.replace(/\n/g, '<br>');
+            
+            messageEl.appendChild(bubbleEl);
+            messagesDiv.appendChild(messageEl);
+            
+            // Add buttons if provided
+            if (message.buttons && message.buttons.length > 0) {
+                const buttonsContainer = document.createElement('div');
+                buttonsContainer.className = 'message-buttons';
+                
+                if (message.showServiceButtons) {
+                    // Service grid layout
+                    const serviceGrid = document.createElement('div');
+                    serviceGrid.className = 'service-grid';
+                    
+                    services.forEach(service => {
+                        const btn = document.createElement('button');
+                        btn.className = 'service-btn';
+                        btn.innerHTML = `${service.emoji}<br>${service.name}`;
+                        btn.onclick = () => selectService(service.name);
+                        serviceGrid.appendChild(btn);
+                    });
+                    
+                    messageEl.appendChild(serviceGrid);
+                } else {
+                    // Regular button layout
+                    message.buttons.forEach(buttonText => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn-option';
+                        btn.textContent = buttonText;
+                        btn.onclick = () => handleButtonClick(buttonText);
+                        buttonsContainer.appendChild(btn);
+                    });
+                    messageEl.appendChild(buttonsContainer);
+                }
+            }
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Add User Message
+        function addUserMessage(text) {
+            const userMessage = {
+                type: 'user',
+                text: text
+            };
+            
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = 'message user';
+            
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = 'message-bubble';
+            bubbleEl.textContent = text;
+            
+            messageEl.appendChild(bubbleEl);
+            messagesDiv.appendChild(messageEl);
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Show Typing Indicator
+        function showTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingEl = document.createElement('div');
+            typingEl.className = 'message bot';
+            typingEl.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+            typingEl.id = 'typing-indicator';
+            messagesDiv.appendChild(typingEl);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Remove Typing Indicator
+        function removeTypingIndicator() {
+            const typingEl = document.getElementById('typing-indicator');
+            if (typingEl) {
+                typingEl.remove();
+            }
+        }
+
+        // Process User Input
+        function processInput(userText) {
+            const lowerText = userText.toLowerCase().trim();
+            
+            // Check for emergency
+            if (lowerText.includes('emergency') || lowerText.includes('urgent') || lowerText.includes('broken')) {
+                return knowledgeBase.emergency;
+            }
+            
+            // Check for exact matches first
+            for (const [key, data] of Object.entries(knowledgeBase)) {
+                if (data.keywords && data.keywords.some(keyword => lowerText.includes(keyword))) {
+                    return data;
+                }
+            }
+            
+            // Default response
+            return {
+                response: "I understand. For more detailed information, please:",
+                details: ["1. Use our price calculator tool", "2. Call us: +91 98765 43210", "3. Connect via WhatsApp for instant support"],
+                buttons: ['Call Now', 'WhatsApp', 'Back to Menu']
+            };
+        }
+
+        // Handle Button Click
+        function handleButtonClick(buttonText) {
+            addUserMessage(buttonText);
+            document.getElementById('chatInput').value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                
+                let response;
+                
+                switch(buttonText) {
+                    case 'Glass Services':
+                        response = knowledgeBase.services;
+                        response.buttons = ['Get Quote', 'Pricing', 'Emergency', 'Back to Menu'];
+                        break;
+                    case 'Pricing':
+                        response = knowledgeBase.pricing;
+                        response.buttons = ['Price Calculator', 'Get Quote', 'Back to Menu'];
+                        break;
+                    case 'Timeline':
+                        response = knowledgeBase.timeline;
+                        response.buttons = ['Emergency Service', 'Get Quote', 'Back to Menu'];
+                        break;
+                    case 'Emergency':
+                    case 'Emergency Service':
+                        response = knowledgeBase.emergency;
+                        response.buttons = ['Call Now', 'WhatsApp Emergency', 'Back to Menu'];
+                        break;
+                    case 'Warranty':
+                        response = knowledgeBase.guarantee;
+                        response.buttons = ['Get Quote', 'Back to Menu'];
+                        break;
+                    case 'Contact Us':
+                        response = {
+                            response: "📞 Contact Ganesh Glass Center:",
+                            details: [
+                                "📱 Phone: +91 98765 43210",
+                                "💬 WhatsApp: +91 98765 43210",
+                                "📧 Email: info@ganeshglasscenter.com",
+                                "🏢 Address: [Company Address], Ahmedabad",
+                                "🕐 Hours: Monday-Saturday, 9 AM - 7 PM"
+                            ],
+                            buttons: ['Call Now', 'WhatsApp Chat', 'Get Quote', 'Back to Menu']
+                        };
+                        break;
+                    case 'Call Now':
+                        window.open('tel:+919876543210');
+                        response = { response: "☎️ Opening your phone to call us..." };
+                        break;
+                    case 'WhatsApp Emergency':
+                    case 'WhatsApp':
+                    case 'WhatsApp Chat':
+                        const waMessage = selectedService 
+                            ? `Hi Ganesh Glass Center, I need urgent glass solution for ${selectedService}`
+                            : 'Hi Ganesh Glass Center, I need glass and aluminium solutions. Please provide a quote.';
+                        window.open(`https://wa.me/919876543210?text=${encodeURIComponent(waMessage)}`);
+                        response = { response: "💬 Opening WhatsApp..." };
+                        break;
+                    case 'Price Calculator':
+                        response = { response: "📊 Redirecting to price calculator...", buttons: [] };
+                        setTimeout(() => {
+                            window.location.href = '/price-estimator.html';
+                        }, 1000);
+                        break;
+                    case 'Get Quote':
+                    case 'Get Quote Now':
+                        response = { response: "📝 Opening quote form...", buttons: [] };
+                        setTimeout(() => {
+                            window.location.href = '/whatsapp-lead-capture.html';
+                        }, 1000);
+                        break;
+                    case 'Back to Menu':
+                    case 'Back':
+                        response = {
+                            response: "🏠 Back to main menu. What can I help you with?",
+                            buttons: ['Glass Services', 'Pricing', 'Timeline', 'Emergency Service', 'Contact Us']
+                        };
+                        break;
+                    default:
+                        response = knowledgeBase.back;
+                }
+                
+                displayBotResponse(response);
+            }, 800);
+        }
+
+        // Display Bot Response
+        function displayBotResponse(data) {
+            const message = {
+                type: 'bot',
+                text: data.response,
+                buttons: data.buttons || [],
+                showServiceButtons: data.showServiceButtons || false
+            };
+            
+            if (data.details && data.details.length > 0) {
+                message.text += '\n\n' + data.details.join('\n');
+            }
+            
+            displayMessage(message);
+        }
+
+        // Select Service
+        function selectService(serviceName) {
+            selectedService = serviceName;
+            addUserMessage(`I'm interested in: ${serviceName}`);
+            document.getElementById('chatInput').value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                
+                const message = {
+                    type: 'bot',
+                    text: `Great! 🎉 I've noted that you're interested in: ${serviceName}\n\nNow let's connect you with our team to get a personalized quote.`,
+                };
+                
+                displayMessage(message);
+                
+                setTimeout(() => {
+                    const cta = document.createElement('div');
+                    cta.className = 'message bot';
+                    const ctaBtn = document.createElement('div');
+                    ctaBtn.className = 'whatsapp-cta';
+                    ctaBtn.innerHTML = '💬 Get Quote via WhatsApp';
+                    ctaBtn.onclick = () => {
+                        const waMessage = `Hi Ganesh Glass Center, I'm interested in ${serviceName}. Please provide me with a quotation.`;
+                        window.open(`https://wa.me/919876543210?text=${encodeURIComponent(waMessage)}`);
+                    };
+                    cta.appendChild(ctaBtn);
+                    document.getElementById('chatMessages').appendChild(cta);
+                    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                }, 500);
+            }, 800);
+        }
+
+        // Send Message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            addUserMessage(text);
+            input.value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = processInput(text);
+                displayBotResponse(response);
+            }, 800);
+        }
+
+        // Handle Key Press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Close Chat
+        function closeChat() {
+            if (confirm('Close chat?')) {
+                window.close();
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initializeChat);
+    </script>
+</body>
+</html>

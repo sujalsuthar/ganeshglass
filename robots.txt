@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /services.html
+Allow: /contact.html
+Allow: /sitemap.xml
+
+Disallow: /admin/
+Disallow: /private/
+
+# Crawl-delay and request-rate
+Crawl-delay: 1
+
+# Google-specific directives
+User-agent: Googlebot
+Allow: /
+Priority: 1.0
+
+# Sitemap location
+Sitemap: https://ganeshglasscenter.com/sitemap.xml
