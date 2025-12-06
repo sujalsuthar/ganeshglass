@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Google Search Console Verification -->
-    <!-- Get your verification code from: https://search.google.com/search-console -->
-    <!-- Then replace PASTE_YOUR_VERIFICATION_CODE_HERE with actual code -->
-    <meta name="google-site-verification" content="PASTE_YOUR_VERIFICATION_CODE_HERE">
+    <!-- Get code: https://search.google.com/search-console > Add Property > HTML tag method -->
+    <!-- Copy the verification code (long string) and paste below -->
+    <meta name="google-site-verification" content="PASTE_REAL_SEARCH_CONSOLE_CODE_HERE">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://ganeshglasscentre.com/index.html">
@@ -43,13 +43,13 @@
     <!-- Cache Headers Meta -->
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
     
-    <!-- Google Analytics 4 - Replace YOUR_GA4_ID with your actual Measurement ID from https://analytics.google.com -->
-    <!-- Format: G-XXXXXXXXXX (example: G-ABC123XYZ9) -->
+    <!-- Google Analytics 4 - Get your Measurement ID from https://analytics.google.com -->
+    <!-- Go to: Admin > Data Streams > Web > Copy Measurement ID (format: G-XXXXXXXXXX) -->
     <script>
-      // TODO: Replace 'YOUR_GA4_ID' below with your real Google Analytics 4 Measurement ID
-      const GA4_MEASUREMENT_ID = 'YOUR_GA4_ID'; // Get from Google Analytics Admin > Data Streams
+      // PASTE YOUR REAL GA4 MEASUREMENT ID BELOW (Get from Google Analytics Admin > Data Streams)
+      const GA4_MEASUREMENT_ID = 'PASTE_REAL_GA4_ID_HERE'; // Example: 'G-ABC123XYZ9'
       
-      if (GA4_MEASUREMENT_ID !== 'YOUR_GA4_ID') {
+      if (GA4_MEASUREMENT_ID !== 'PASTE_REAL_GA4_ID_HERE') {
         const script = document.createElement('script');
         script.async = true;
         script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
@@ -107,6 +107,8 @@
         "name": "Ahmedabad"
       },
       "openingHours": "Mo-Sa 09:00-18:00",
+      "telephone": "+91-9054106839",
+      "email": "sujalsuthar2005@gmail.com",
       "service": [
         {
           "@type": "Service",
@@ -473,11 +475,11 @@
                     </div>
                     
                     <div class="flex gap-4 flex-wrap">
-                        <a href="contact.html" onclick="trackEvent('homepage_hero_contact')" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition inline-flex items-center justify-center gap-2 text-lg shadow-lg hover:shadow-xl">
-                            📞 Get Free Quote
+                        <a href="tel:+919054106839" onclick="trackEvent('call_button_click', {category: 'contact', label: 'hero_call'})" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition inline-flex items-center justify-center gap-2 text-lg shadow-lg hover:shadow-xl">
+                            📞 Call: +91-9054106839
                         </a>
-                        <a href="services.html" onclick="trackEvent('homepage_hero_services')" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-bold transition inline-flex items-center justify-center gap-2 text-lg shadow-lg hover:shadow-xl">
-                            🪟 View Our Services
+                        <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'hero_whatsapp'})" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-bold transition inline-flex items-center justify-center gap-2 text-lg shadow-lg hover:shadow-xl">
+                            💬 WhatsApp Us
                         </a>
                     </div>
                     
@@ -534,9 +536,9 @@
             
             <!-- Call-to-Action after trust section -->
             <div class="mt-8 text-center">
-                <p class="text-blue-100 mb-4">Need glass or aluminium work? Visit us or send enquiry</p>
-                <a href="contact.html" onclick="trackEvent('homepage_trust_contact')" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold transition inline-block shadow-lg">
-                    📍 Contact Us for Quote
+                <p class="text-blue-100 mb-4">Need glass or aluminium work? Call or WhatsApp now</p>
+                <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'trust_section'})" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold transition inline-block shadow-lg">
+                    💬 WhatsApp for Free Quote
                 </a>
             </div>
         </div>
@@ -662,8 +664,8 @@
                 
                 <div class="service-card bg-white border-2 border-orange-200 p-8 rounded-lg hover:border-orange-900 transition">
                     <div class="text-5xl mb-4">🔒</div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-900">Quality Materials</h3>
-                    <p class="text-gray-600 mb-4">Premium tempered glass and aluminium materials. Professional installation with 25+ years of experience.</p>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">Quality-Tested Materials</h3>
+                    <p class="text-gray-600 mb-4">Premium tempered glass and aluminium materials. Professional installation with 25+ years of experience since 2000.</p>
                     <a href="services.html" onclick="trackEvent('homepage_advantage3_services')" class="text-orange-600 font-bold hover:text-orange-700">🪟 View Services →</a>
                 </div>
             </div>
@@ -728,11 +730,11 @@
                 </div>
                 <div class="bg-green-600 text-white p-6 rounded-lg text-center">
                     <p class="text-4xl font-bold mb-2">25+</p>
-                    <p class="text-green-100">Years of Experience</p>
+                    <p class="text-green-100">Years Experience</p>
                 </div>
                 <div class="bg-orange-500 text-white p-6 rounded-lg text-center">
-                    <p class="text-4xl font-bold mb-2">GST</p>
-                    <p class="text-orange-100">Registered Business</p>
+                    <p class="text-4xl font-bold mb-2">100s</p>
+                    <p class="text-orange-100">Satisfied Clients</p>
                 </div>
             </div>
         </div>
@@ -970,11 +972,11 @@
                 Professional consultation for all your glass and aluminium needs in Ahmedabad.
             </p>
             <div class="flex gap-4 justify-center flex-wrap">
-                <a href="contact.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold transition" onclick="trackEvent('cta_contact_main')">
-                    📞 Contact Us
+                <a href="tel:+919054106839" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold transition" onclick="trackEvent('call_button_click', {category: 'contact', label: 'cta_main'})">
+                    📞 Call: +91-9054106839
                 </a>
-                <a href="services.html" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-bold transition" onclick="trackEvent('cta_services_main')">
-                    🪟 View Services
+                <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-bold transition" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'cta_main'})">
+                    💬 WhatsApp Now
                 </a>
             </div>
             <p class="text-gray-300 mt-6 text-sm">
@@ -1052,8 +1054,11 @@ Sunday: Closed</p>
                             </ul>
                         </div>
                         
-                        <a href="contact.html" onclick="trackEvent('homepage_final_cta_contact')" class="w-full block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg transition text-center">
-                            📞 Get Contact Details
+                        <a href="tel:+919054106839" onclick="trackEvent('call_button_click', {category: 'contact', label: 'final_cta'})" class="w-full block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg transition text-center">
+                            📞 Call: +91-9054106839
+                        </a>
+                        <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'final_cta'})" class="w-full block bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg transition text-center mt-3">
+                            💬 WhatsApp Now
                         </a>
                     </div>
                     <p class="text-center text-xs text-gray-600 mt-4">Serving Chandkheda & Ahmedabad Since 2000</p>
@@ -1084,9 +1089,9 @@ Sunday: Closed</p>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4">Contact</h4>
-                    <p class="text-sm mb-2">📞 +91-98765-43210</p>
-                    <p class="text-sm mb-2">💬 WhatsApp Available</p>
-                    <p class="text-sm">📧 info@ganeshglasscentre.com</p>
+                    <p class="text-sm mb-2"><a href="tel:+919054106839" class="hover:text-white">📞 +91-9054106839</a></p>
+                    <p class="text-sm mb-2"><a href="https://wa.me/919054106839" target="_blank" class="hover:text-white">💬 WhatsApp: +91-9054106839</a></p>
+                    <p class="text-sm"><a href="mailto:sujalsuthar2005@gmail.com" class="hover:text-white">📧 sujalsuthar2005@gmail.com</a></p>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 text-center text-sm">
@@ -1097,23 +1102,23 @@ Sunday: Closed</p>
 
     <!-- Sticky Mobile CTA Bar -->
     <div class="sticky-mobile-cta" id="stickyCTA">
-        <a href="contact.html" class="sticky-call-btn" onclick="trackEvent('sticky_contact_click')">
-            📞 Contact
+        <a href="tel:+919054106839" class="sticky-call-btn" onclick="trackEvent('call_button_click', {category: 'contact', label: 'sticky_mobile'})">
+            📞 Call Now
         </a>
-        <a href="services.html" class="sticky-whatsapp-btn" onclick="trackEvent('sticky_services_click')">
-            🪟 Services
+        <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" class="sticky-whatsapp-btn" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'sticky_mobile'})">
+            💬 WhatsApp
         </a>
     </div>
 
     <!-- Enhanced Floating Action Buttons -->
     <div class="floating-buttons" id="floatingButtons">
-        <a href="contact.html" class="float-btn call-btn" title="Contact Ganesh Glass Centre" onclick="trackEvent('floating_contact_click')">
-            <span class="float-btn-label">Contact Us</span>
+        <a href="tel:+919054106839" class="float-btn call-btn" title="Call Ganesh Glass Centre" onclick="trackEvent('call_button_click', {category: 'contact', label: 'floating_call'})">
+            <span class="float-btn-label">Call Now</span>
             📞
         </a>
-        <a href="services.html" class="float-btn whatsapp-btn" title="View Services" onclick="trackEvent('floating_services_click')">
-            <span class="float-btn-label">Services</span>
-            🪟
+        <a href="https://wa.me/919054106839?text=Hello%20I%20need%20glass%20or%20aluminium%20work%20in%20Ahmedabad" target="_blank" class="float-btn whatsapp-btn" title="WhatsApp Ganesh Glass Centre" onclick="trackEvent('whatsapp_button_click', {category: 'contact', label: 'floating_whatsapp'})">
+            <span class="float-btn-label">WhatsApp</span>
+            💬
         </a>
     </div>
 
