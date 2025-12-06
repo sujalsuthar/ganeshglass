@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE">
+    <!-- Get your verification code from: https://search.google.com/search-console -->
+    <!-- Then replace PASTE_YOUR_VERIFICATION_CODE_HERE with actual code -->
+    <meta name="google-site-verification" content="PASTE_YOUR_VERIFICATION_CODE_HERE">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://ganeshglasscentre.com/index.html">
@@ -25,7 +27,7 @@
     <meta property="og:type" content="business.business">
     <meta property="og:title" content="Ganesh Glass Centre - Professional Glass & Aluminium Work | Ahmedabad">
     <meta property="og:description" content="25+ years of trusted service in glass windows, aluminium sliding doors, tempered glass, and mirrors. GST Registered. Shop 24, Sahjanand Complex, New CG Road, Chandkheda.">
-    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Ganesh+Glass+Centre">
+    <meta property="og:image" content="/images/ganesh-glass-centre-chandkheda-og-image.jpg">
     <meta property="og:url" content="https://ganeshglasscentre.com">
     <meta property="og:site_name" content="Ganesh Glass Centre">
     
@@ -35,23 +37,33 @@
     <meta name="twitter:description" content="Expert glass and aluminium solutions in Ahmedabad. 24+ years trusted service.">
     
     <!-- Preload Hero Image & Fonts for LCP Optimization -->
-    <link rel="preload" as="image" href="https://via.placeholder.com/500x400?text=Premium+Glass+Windows+Installation+Ahmedabad" imagesrcset="https://via.placeholder.com/500x400?text=Premium+Glass+Windows+Installation+Ahmedabad 500w" imagesizes="(max-width: 600px) 100vw, 500px">
+    <link rel="preload" as="image" href="/images/glass-windows-installation-ahmedabad-hero.jpg" imagesrcset="/images/glass-windows-installation-ahmedabad-hero-500w.jpg 500w, /images/glass-windows-installation-ahmedabad-hero-800w.jpg 800w" imagesizes="(max-width: 600px) 100vw, 500px">
     <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" type="font/woff2" crossorigin>
     
     <!-- Cache Headers Meta -->
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
     
-    <!-- Google Analytics 4 - Async Loading -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Google Analytics 4 - Replace YOUR_GA4_ID with your actual Measurement ID from https://analytics.google.com -->
+    <!-- Format: G-XXXXXXXXXX (example: G-ABC123XYZ9) -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX', {
-        'page_path': window.location.pathname,
-        'anonymize_ip': true,
-        'optimize_id': 'OPT-XXXXX'
-      });
+      // TODO: Replace 'YOUR_GA4_ID' below with your real Google Analytics 4 Measurement ID
+      const GA4_MEASUREMENT_ID = 'YOUR_GA4_ID'; // Get from Google Analytics Admin > Data Streams
+      
+      if (GA4_MEASUREMENT_ID !== 'YOUR_GA4_ID') {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', GA4_MEASUREMENT_ID, {
+          'page_path': window.location.pathname,
+          'anonymize_ip': true,
+          'send_page_view': true
+        });
+      }
     </script>
     
     <!-- Schema.org LocalBusiness JSON-LD with Geo Coordinates -->
@@ -62,7 +74,7 @@
       "@id": "https://ganeshglasscentre.com",
       "name": "Ganesh Glass Centre",
       "alternateName": "Ganesh Glass",
-      "image": "https://via.placeholder.com/400x300?text=Ganesh+Glass+Centre+Ahmedabad",
+      "image": "/images/ganesh-glass-centre-shop-chandkheda-ahmedabad.jpg",
       "description": "Professional glass & aluminium work in Ahmedabad - Glass windows, sliding doors, tempered glass, mirrors. 25+ years trusted service. GST Registered.",
       "address": {
         "@type": "PostalAddress",
@@ -471,8 +483,13 @@
                     
                     <p class="text-sm text-gray-300 mt-4">✓ 25+ Years Experience | ✓ GST Registered | ✓ Quality Guaranteed</p>
                 </div>
-                <div class="bg-gray-400 h-80 rounded-lg flex items-center justify-center">
-                    <img src="https://via.placeholder.com/500x400?text=Premium+Glass+Windows+Installation+Ahmedabad" alt="Professional emergency glass repair service in Chandkheda, Ahmedabad - Ganesh Glass Center" class="w-full h-full object-cover rounded-lg">
+                <div class="bg-gray-200 h-80 rounded-lg flex items-center justify-center overflow-hidden">
+                    <img src="/images/glass-windows-installation-ahmedabad-hero.jpg" 
+                         alt="Professional glass windows and aluminium doors installation service in Chandkheda Ahmedabad - Ganesh Glass Centre" 
+                         width="500" 
+                         height="400" 
+                         loading="eager"
+                         class="w-full h-full object-cover rounded-lg">
                 </div>
             </div>
         </div>
@@ -734,10 +751,13 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Before/After 1 -->
                 <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
-                    <div class="aspect-square bg-gray-300 flex items-center justify-center relative">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <img src="https://via.placeholder.com/400x400?text=Before+Glass+Installation" alt="Before glass installation in Ahmedabad home" class="w-full h-full object-cover">
-                        </div>
+                    <div class="aspect-square bg-gray-200 flex items-center justify-center relative">
+                        <img src="/images/before-glass-window-installation-residential-ahmedabad.jpg" 
+                             alt="Before tempered glass window installation in residential home Ahmedabad" 
+                             width="400" 
+                             height="400" 
+                             loading="lazy"
+                             class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold">BEFORE</span>
                     </div>
                     <div class="p-4">
@@ -748,10 +768,13 @@
 
                 <!-- Before/After 2 (After) -->
                 <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
-                    <div class="aspect-square bg-gray-300 flex items-center justify-center relative">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <img src="https://via.placeholder.com/400x400?text=After+Glass+Installation" alt="After professional glass installation in Ahmedabad" class="w-full h-full object-cover">
-                        </div>
+                    <div class="aspect-square bg-gray-200 flex items-center justify-center relative">
+                        <img src="/images/after-glass-window-installation-professional-ahmedabad.jpg" 
+                             alt="After professional tempered glass window installation sealed waterproof Ahmedabad" 
+                             width="400" 
+                             height="400" 
+                             loading="lazy"
+                             class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded text-sm font-bold">AFTER</span>
                     </div>
                     <div class="p-4">
@@ -762,10 +785,13 @@
 
                 <!-- Before/After 3 -->
                 <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
-                    <div class="aspect-square bg-gray-300 flex items-center justify-center relative">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <img src="https://via.placeholder.com/400x400?text=Office+Partition+Before" alt="Before office glass partition installation" class="w-full h-full object-cover">
-                        </div>
+                    <div class="aspect-square bg-gray-200 flex items-center justify-center relative">
+                        <img src="/images/before-office-glass-partition-installation-ahmedabad.jpg" 
+                             alt="Before modern office glass partition installation Thaltej Ahmedabad" 
+                             width="400" 
+                             height="400" 
+                             loading="lazy"
+                             class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold">BEFORE</span>
                     </div>
                     <div class="p-4">
@@ -776,10 +802,13 @@
 
                 <!-- Before/After 4 -->
                 <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
-                    <div class="aspect-square bg-gray-300 flex items-center justify-center relative">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <img src="https://via.placeholder.com/400x400?text=Office+Partition+After" alt="Modern glass partition office design in Ahmedabad" class="w-full h-full object-cover">
-                        </div>
+                    <div class="aspect-square bg-gray-200 flex items-center justify-center relative">
+                        <img src="/images/after-office-glass-partition-soundproof-ahmedabad.jpg" 
+                             alt="After modern soundproof office glass partition professional design Ahmedabad" 
+                             width="400" 
+                             height="400" 
+                             loading="lazy"
+                             class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded text-sm font-bold">AFTER</span>
                     </div>
                     <div class="p-4">
@@ -1111,15 +1140,58 @@ Sunday: Closed</p>
         }
 
         // Track conversion events for GA4
-        function trackEvent(eventName) {
+        function trackEvent(eventName, eventParams = {}) {
+            // Console log for debugging (remove in production if needed)
+            console.log('Event tracked:', eventName, eventParams);
+            
+            // Send to Google Analytics 4 if configured
             if (typeof gtag !== 'undefined') {
                 gtag('event', eventName, {
-                    'event_category': 'engagement',
-                    'event_label': 'cta_click',
-                    'timestamp': new Date().toISOString()
+                    'event_category': eventParams.category || 'engagement',
+                    'event_label': eventParams.label || eventName,
+                    'value': eventParams.value || 1,
+                    'page_location': window.location.href,
+                    'page_title': document.title,
+                    'timestamp': new Date().toISOString(),
+                    ...eventParams
                 });
             }
-            console.log('Event tracked:', eventName);
+            
+            // Track specific conversion events
+            switch(eventName) {
+                case 'contact_form_submit':
+                    // Track form submission as conversion
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'form',
+                            'event_label': 'contact_form',
+                            'currency': 'INR'
+                        });
+                    }
+                    break;
+                    
+                case 'call_button_click':
+                    // Track call button clicks
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact', {
+                            'event_category': 'engagement',
+                            'event_label': 'phone_call',
+                            'method': 'phone'
+                        });
+                    }
+                    break;
+                    
+                case 'whatsapp_button_click':
+                    // Track WhatsApp clicks
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact', {
+                            'event_category': 'engagement',
+                            'event_label': 'whatsapp_message',
+                            'method': 'whatsapp'
+                        });
+                    }
+                    break;
+            }
         }
 
         // Initialize on load
@@ -1128,21 +1200,85 @@ Sunday: Closed</p>
         // Handle resize events
         window.addEventListener('resize', handleStickyMobileCTA);
 
-        // Track page scroll depth for analytics
-        let maxScroll = 0;
+        // Track page scroll depth for analytics (25%, 50%, 75%, 100%)
+        let scrollTracked = {
+            '25': false,
+            '50': false,
+            '75': false,
+            '100': false
+        };
+        
         window.addEventListener('scroll', function() {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            if (scrollPercent > maxScroll) {
-                maxScroll = scrollPercent;
-                if (scrollPercent > 25 && scrollPercent <= 50) {
-                    trackEvent('scroll_25_percent');
-                } else if (scrollPercent > 50 && scrollPercent <= 75) {
-                    trackEvent('scroll_50_percent');
-                } else if (scrollPercent > 75) {
-                    trackEvent('scroll_75_percent');
-                }
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.round((window.scrollY / scrollHeight) * 100);
+            
+            // Track milestone percentages
+            if (scrollPercent >= 25 && !scrollTracked['25']) {
+                scrollTracked['25'] = true;
+                trackEvent('scroll_depth', { 
+                    category: 'engagement', 
+                    label: '25_percent',
+                    value: 25
+                });
+            }
+            if (scrollPercent >= 50 && !scrollTracked['50']) {
+                scrollTracked['50'] = true;
+                trackEvent('scroll_depth', { 
+                    category: 'engagement', 
+                    label: '50_percent',
+                    value: 50
+                });
+            }
+            if (scrollPercent >= 75 && !scrollTracked['75']) {
+                scrollTracked['75'] = true;
+                trackEvent('scroll_depth', { 
+                    category: 'engagement', 
+                    label: '75_percent',
+                    value: 75
+                });
+            }
+            if (scrollPercent >= 99 && !scrollTracked['100']) {
+                scrollTracked['100'] = true;
+                trackEvent('scroll_depth', { 
+                    category: 'engagement', 
+                    label: '100_percent',
+                    value: 100
+                });
             }
         });
+        
+        // Track time on page (send after 30 seconds, 1 min, 3 min)
+        let timeTracked = { '30': false, '60': false, '180': false };
+        let timeOnPage = 0;
+        
+        setInterval(function() {
+            timeOnPage += 10;
+            
+            if (timeOnPage >= 30 && !timeTracked['30']) {
+                timeTracked['30'] = true;
+                trackEvent('time_on_page', { 
+                    category: 'engagement', 
+                    label: '30_seconds',
+                    value: 30
+                });
+            }
+            if (timeOnPage >= 60 && !timeTracked['60']) {
+                timeTracked['60'] = true;
+                trackEvent('time_on_page', { 
+                    category: 'engagement', 
+                    label: '1_minute',
+                    value: 60
+                });
+            }
+            if (timeOnPage >= 180 && !timeTracked['180']) {
+                timeTracked['180'] = true;
+                trackEvent('time_on_page', { 
+                    category: 'engagement', 
+                    label: '3_minutes',
+                    value: 180
+                });
+            }
+        }, 10000); // Check every 10 seconds
     </script>
 </body>
 </html>
